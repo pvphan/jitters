@@ -8,12 +8,12 @@ class Relay:
     _offDutyValue = 0.0
     _sleepIncrement = 0.01
     _defaultCycleDuration = 30
-    def __init__(self, pwmLed):
-        self._dutyValue = 0
+    def __init__(self, pwmLed: PWMLED):
         self._led = pwmLed
-        self._dutyValue = None
         self._hardwareExecutionThread = threading.Thread()
+        self._dutyValue = None
         self.setTargetDutyCycle(0.5)
+        self._cycleDuration = None
         self.setCycleDuration(self._defaultCycleDuration)
 
     def setTargetDutyCycle(self, dutyValue):
@@ -27,7 +27,8 @@ class Relay:
             return False
         self.canRunCycle = True
         self._hardwareExecutionThread = threading.Thread(
-                target=self._setAndUnsetDutyValue, args=(self._cycleDuration,))
+                target=self._setAndUnsetDutyValue,
+                args=(self._cycleDuration,))
         self._hardwareExecutionThread.start()
         return True
 
