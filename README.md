@@ -9,7 +9,6 @@ Focus on minimal wiring, user interacts only through web GUI (QR code link on st
 
 
 inputs
-- run
 - 1-wire temperature sensor ([DS18B20](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing))
 
 outputs
