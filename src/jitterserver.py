@@ -13,11 +13,12 @@ from tempsensor import TemperatureSensor
 flaskApp = Flask("JitterServer")
 
 class JitterServer:
+    _indexHtmlPath = "index.html"
     def __init__(self,
-            heaterSensor: TemperatureSensor,
-            heaterRelay: Relay,
-            pump1Relay: Relay,
-            pump2Relay: Relay):
+                heaterSensor: TemperatureSensor,
+                heaterRelay: Relay,
+                pump1Relay: Relay,
+                pump2Relay: Relay):
         self._heaterSensor = heaterSensor
         self._heaterRelay = heaterRelay
         self._pump1Relay = pump1Relay
@@ -25,12 +26,13 @@ class JitterServer:
 
     def index(self):
         now = datetime.datetime.now()
-        timeString = now.strftime("%Y-%m-%d %H:%M")
+        timeString = now.strftime("%Y-%m-%d %H:%M:%S")
         templateData = {
-                'title' : 'HELLO!',
-                'time': timeString
+                "title": "Jitter Server",
+                "time": timeString,
+                "isPump1On": self._pump1Relay.isRunning(),
         }
-        return render_template('index.html', **templateData)
+        return render_template(self._indexHtmlPath, **templateData)
 
 
 class GlobalContainer:
@@ -38,8 +40,20 @@ class GlobalContainer:
 
 
 @flaskApp.route("/")
-def hello():
+def index():
     return GlobalContainer.jitterServer.index()
+
+
+@flaskApp.route("/pump1/startcycle", methods=["GET", "POST"])
+def pump1StartCycle():
+    didStart = GlobalContainer.jitterServer._pump1Relay.startCycle()
+    return index()
+
+
+@flaskApp.route("/pump1/killcycle", methods=["GET", "POST"])
+def pump1KillCycle():
+    didKill = GlobalContainer.jitterServer._pump1Relay.killCycle()
+    return index()
 
 
 def runJitterServer(heaterSensor, heaterRelay, pump1Relay, pump2Relay,

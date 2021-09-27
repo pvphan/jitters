@@ -4,16 +4,16 @@ Main application launch: connect to hardware components, inject them into the
 """
 
 from jitterserver import runJitterServer
-from relay import Relay
+from relay import createRelayFromPin
 from tempsensor import TemperatureSensor
 
 
 def main():
     # TODO: map pinout to physical layout (not set up yet)
     heaterSensor = TemperatureSensor(None)
-    heaterRelay = Relay(None)
-    pump1Relay = Relay(None)
-    pump2Relay = Relay(None)
+    heaterRelay = createRelayFromPin(None)
+    pump1Relay = createRelayFromPin(None)
+    pump2Relay = createRelayFromPin(None)
 
     port = 80
     shouldDebug = False

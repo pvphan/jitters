@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-   <head>
-      <title>{{ title }}</title>
-   </head>
-   <body>
-      <h1>Hello, World!</h1>
-      <h2>The date and time on the server is: {{ time }}</h2>
-   </body>
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>Jitter Server</h1>
+    <h2>The date and time on the server is: {{ time }}</h2>
+    <h3> pump1 running: {{ isPump1On }}
+        {% if isPump1On == 1 %}
+        <a href="/pump1/killcycle" class="button">KILL CYCLE</a>
+        {% else %}
+        <a href="/pump1/startcycle" class="button">START CYCLE</a>
+        {% endif %}
+    </h3>
+</body>
 </html>

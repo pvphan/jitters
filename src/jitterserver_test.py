@@ -1,14 +1,23 @@
 from unittest.mock import MagicMock
 
 from jitterserver import runJitterServer
+from relay import Relay
 
 
 def main():
     heaterSensor = MagicMock()
     heaterSensor.getTempC.return_value = 11.1
-    heaterRelay = MagicMock()
-    pump1Relay = MagicMock()
-    pump2Relay = MagicMock()
+
+    heaterLed = MagicMock()
+    heaterRelay = Relay(heaterLed)
+
+    pwmLed1 = MagicMock()
+    pump1Relay = Relay(pwmLed1)
+    pump1Relay.setCycleDuration(5)
+
+    pwmLed2 = MagicMock()
+    pump2Relay = Relay(pwmLed2)
+    pump2Relay.setCycleDuration(5)
 
     port = 8080
     shouldDebug = True
