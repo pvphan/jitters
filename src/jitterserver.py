@@ -12,7 +12,10 @@ class JitterServer:
             heaterRelay: Relay,
             pump1Relay: Relay,
             pump2Relay: Relay):
-        pass
+        self._heaterSensor = heaterSensor
+        self._heaterRelay = heaterRelay
+        self._pump1Relay = pump1Relay
+        self._pump2Relay = pump2Relay
 
     def run(self):
         raise NotImplementedError()
